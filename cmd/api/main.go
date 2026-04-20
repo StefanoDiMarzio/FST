@@ -918,11 +918,9 @@ func recoverMiddleware(next http.Handler) http.Handler {
 }
 
 func routePattern(r *http.Request) string {
-	pattern := r.Pattern
-	if pattern == "" {
-		return "unmatched"
-	}
-	return pattern
+	// In Go 1.22, il pattern non è direttamente accessibile
+	// Usiamo il path come fallback
+	return r.URL.Path
 }
 
 func registerDBMetrics(db *sql.DB) {
